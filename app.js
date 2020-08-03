@@ -15,9 +15,13 @@ app.get('/api/movies/:title', (req, res) => {
     for (i in resposta.data.data){
 
         obj.moviesByYear.push( {
-            year: resposta.data.data[i].Year    
+            year: resposta.data.data[i].Year
         })
     } 
+    
+    obj.moviesByYear = obj.moviesByYear.filter(function (a) {
+        return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
+    }, Object.create(null))
 
     var json = JSON.stringify(obj)
 
@@ -45,6 +49,10 @@ app.get('/api/movies', (req, res) => {
             year: resposta.data.data[i].Year  
         })
     }
+
+    obj.moviesByYear = obj.moviesByYear.filter(function (a) {
+        return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
+    }, Object.create(null))
 
     var json = JSON.stringify(obj)
 
